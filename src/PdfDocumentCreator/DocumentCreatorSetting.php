@@ -33,6 +33,9 @@ class DocumentCreatorSetting
     private $img_dpi;
     private $size;
     private $orientation;
+    /**
+     * @var  Margin $margin
+     */
     private $margin;
 
     public function __construct($pdfSetting)
@@ -55,7 +58,13 @@ class DocumentCreatorSetting
 
         $this->size = $pdfSetting['size'];
 
-        $this->margin = $pdfSetting['margin'];
+        $this->margin = (new Margin())
+            ->setLeft($pdfSetting['margin']['left'])
+            ->setRight($pdfSetting['margin']['right'])
+            ->setTop($pdfSetting['margin']['top'])
+            ->setBottom($pdfSetting['margin']['bottom'])
+            ->setHeader($pdfSetting['margin']['header'])
+            ->setFooter($pdfSetting['margin']['footer']);
     }
 
     /**

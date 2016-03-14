@@ -35,7 +35,14 @@ class PdfDocumentCreatorExtension extends CompilerExtension
         'img_dpi' => 120,
         'size' => 'A4',
         'orientation' => 'P',
-        'margin' => array(),
+        'margin' => [
+            'left' => 15,
+            'right' => 15,
+            'top' => 15,
+            'bottom' => 15,
+            'header' => 15,
+            'footer' => 15,
+        ],
     ];
 
 

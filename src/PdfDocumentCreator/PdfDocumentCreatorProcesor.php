@@ -62,33 +62,29 @@ class PdfDocumentCreatorProcesor
 
     }
 
+
     /**
-     * @param $array [top,left,right,bottom]
+     * @param Margin $array
+     * @return $this
      */
-    public function setMargin(array $array)
+    public function setMargin(Margin $array)
     {
 
         $mpdf = $this->mpdf;
 
-        if(array_key_exists('left',$array))
-            $mpdf->orig_lMargin = $mpdf->DeflMargin = $array['left'];
+        $mpdf->orig_lMargin = $mpdf->DeflMargin = $array->left;
 
-        if(array_key_exists('right',$array))
-            $mpdf->orig_rMargin = $mpdf->DefrMargin = $array['right'];
+        $mpdf->orig_rMargin = $mpdf->DefrMargin = $array->right;
 
-        if(array_key_exists('top',$array))
-            $mpdf->orig_tMargin = $mgt = $array['top'];
+        $mpdf->orig_tMargin = $mgt = $array->top;
 
-        if(array_key_exists('bottom',$array))
-            $mpdf->orig_bMargin = $mgt = $array['bottom'];
+        $mpdf->orig_bMargin = $mgt = $array->bottom;
 
-        if(array_key_exists('header',$array))
-            $mpdf->orig_hMargin = $mgt = $array['header'];
+        $mpdf->orig_hMargin = $mgt = $array->header;
 
-        if(array_key_exists('fotter',$array))
-            $mpdf->orig_fMargin = $mgt = $array['footer'];
+        $mpdf->orig_fMargin = $mgt = $array->footer;
 
-
+        return $this;
     }
 
     /**
