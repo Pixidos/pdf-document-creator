@@ -42,7 +42,6 @@ class PdfDocumentCreatorExtension extends CompilerExtension
     public function loadConfiguration()
     {
 
-        $config = array_merge($this->defaults, $this->getConfig());
         $config = $this->getConfig($this->defaults);
 
         Validators::assertField($config, 'tempDir');
@@ -50,7 +49,6 @@ class PdfDocumentCreatorExtension extends CompilerExtension
         Validators::assertField($config, 'encoding');
         Validators::assertField($config, 'img_dpi');
         Validators::assertField($config, 'size');
-        Validators::assertField($config, 'orietation');
         Validators::assertField($config, 'orientation');
         Validators::assertField($config, 'margin');
 
@@ -59,7 +57,7 @@ class PdfDocumentCreatorExtension extends CompilerExtension
 
 
         $builder->addDefinition($this->prefix('settings'))
-            ->setClass('Pixidos\PdfDocumentCreator\DocumentCreatorSetting', $config);
+            ->setClass('Pixidos\PdfDocumentCreator\DocumentCreatorSetting', [$config]);
 
         $builder->addDefinition($this->prefix('default'))
             ->setClass('Pixidos\PdfDocumentCreator\PdfDocumentCreatorProcesor');
