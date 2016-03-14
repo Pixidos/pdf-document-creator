@@ -43,6 +43,7 @@ class PdfDocumentCreatorExtension extends CompilerExtension
     {
 
         $config = array_merge($this->defaults, $this->getConfig());
+        $config = $this->getConfig($this->defaults);
 
         Validators::assertField($config, 'tempDir');
         Validators::assertField($config, 'documentDir');
