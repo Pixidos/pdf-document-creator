@@ -43,20 +43,24 @@ class PdfDocumentCreatorProcesor
         $tmpDir = $setting->getTempDir() . '/mpdf/tmp/';
         $fontDir = $setting->getTempDir() . '/mpdf/font/';
 
-        if (!is_dir($tmpDir)) mkdir($tmpDir, 0777, TRUE);
-        if (!is_dir($fontDir)) mkdir($fontDir, 0777, TRUE);
+        if (!is_dir($tmpDir)) {
+            mkdir($tmpDir, 0777, TRUE);
+        }
+        if (!is_dir($fontDir)) {
+            mkdir($fontDir, 0777, TRUE);
+        }
 
         define("_MPDF_TEMP_PATH", $tmpDir);
         define("_MPDF_TTFONTDATAPATH", $fontDir);
 
-       $this->mpdf = new MPdf($setting->getEncoding(), $setting->getSize());
-    //    $this->mpdf = new MPdf('utf-8', 'A4');
+        $this->mpdf = new MPdf($setting->getEncoding(), $setting->getSize());
+        //    $this->mpdf = new MPdf('utf-8', 'A4');
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->img_dpi = $setting->getImgDpi();
-      //  $this->mpdf->autoScriptToLang = TRUE;
+        //  $this->mpdf->autoScriptToLang = TRUE;
 
         $this->mpdf->showImageErrors = TRUE;
-      //  $this->mpdf->setAutoTopMargin = 'stretch';
+        //  $this->mpdf->setAutoTopMargin = 'stretch';
 
         $this->setMargin($setting->getMargin());
 
@@ -90,18 +94,21 @@ class PdfDocumentCreatorProcesor
     /**
      * Use P for portait or L for Landscape
      * @param string $orientation
+     * @return $this
      * @throws PdfDocumentCreatorExceptions
      */
     public function setOrientation($orientation)
     {
-        if (strtolower($orientation) == 'p' || strtolower($orientation) == 'portait' )
+        if (strtolower($orientation) == 'p' || strtolower($orientation) == 'portait') {
             $or = 'P';
-        elseif (strtolower($orientation) == 'l' || strtolower($orientation) == 'landscape' )
+        } elseif (strtolower($orientation) == 'l' || strtolower($orientation) == 'landscape') {
             $or = 'L';
-        else {
+        } else {
             throw new PdfDocumentCreatorExceptions('Orientatation must by "P" or "Portait" or "L" or "Landscape" ' . (string)$orientation . ' given');
         }
         $this->mpdf->_setPageSize($this->setting->getSize(), $or);
+
+        return $this;
     }
 
     /**
@@ -118,14 +125,16 @@ class PdfDocumentCreatorProcesor
         $fileName = $match[0];
 
         // file must end .pdf extension
-        if (! preg_match("/\.pdf$/i", $fileName, $match))
+        if (!preg_match("/\.pdf$/i", $fileName, $match)) {
             throw new PdfDocumentCreatorExceptions('File extension must by .pdf ' . strtolower($match[0]) . ' given');
+        }
 
         $path = preg_replace($filePattern, '', $file, 1); // remove file name from path
 
         if ($path != '') {
-            if (!is_dir($path) && !is_writable($path))
+            if (!is_dir($path) && !is_writable($path)) {
                 throw new PdfDocumentCreatorExceptions($path . ' in not directory or not writable');
+            }
         } else {
             $path = $this->setting->getDocumentDir() . DIRECTORY_SEPARATOR;
         }
@@ -138,9 +147,13 @@ class PdfDocumentCreatorProcesor
         return $this;
     }
 
+    /**
+     * @param string $html
+     * @return string
+     */
     public function createPdfDocumentString($html)
     {
-        $this->mpdf->WriteHTML($html);
+        $this->mpdf->WriteHTML((string)$html);
 
         return $this->mpdf->Output('', 'S');
     }

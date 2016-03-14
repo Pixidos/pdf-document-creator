@@ -16,6 +16,7 @@
  */
 
 namespace Pixidos\PdfDocumentCreator;
+
 use Pixidos\PdfDocumentCreator\Exceptions\PdfDocumentCreatorExceptions;
 
 /**
@@ -23,7 +24,6 @@ use Pixidos\PdfDocumentCreator\Exceptions\PdfDocumentCreatorExceptions;
  * @package Pixidos\PdfDocumentCreator
  * @author Ondra Votava <ondra.votava@pixidos.com>
  */
-
 class DocumentCreatorSetting
 {
     private $tempDir;
@@ -38,16 +38,21 @@ class DocumentCreatorSetting
      */
     private $margin;
 
+    /**
+     * DocumentCreatorSetting constructor.
+     * @param array $pdfSetting
+     * @throws PdfDocumentCreatorExceptions
+     */
     public function __construct($pdfSetting)
     {
 
         $this->tempDir = $pdfSetting['tempDir'];
-        if ( ! is_writable($this->tempDir)){
+        if (!is_writable($this->tempDir)) {
             throw new PdfDocumentCreatorExceptions($this->tempDir . ' must by writable');
         }
 
         $this->documentDir = $pdfSetting['documentDir'];
-        if ( ! is_writable($this->documentDir)){
+        if (!is_writable($this->documentDir)) {
             throw new PdfDocumentCreatorExceptions($this->documentDir . ' must by writable');
         }
 
