@@ -50,6 +50,7 @@ class PdfDocumentCreatorExtension extends CompilerExtension
         Validators::assertField($config, 'img_dpi');
         Validators::assertField($config, 'size');
         Validators::assertField($config, 'orietation');
+        Validators::assertField($config, 'orientation');
         Validators::assertField($config, 'margin');
 
 
